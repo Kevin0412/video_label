@@ -6,7 +6,6 @@ class label:
     def __init__(self,Range=[0,1]):
         '''
         Range:范围，默认[0,1]
-        serial:是否连续，默认True
         '''
         self.Range=[0,1]
         self.out="values\n"
@@ -15,6 +14,9 @@ class label:
         self.out+="labels\ntime_start,time_end,value\n"
 
     def label(self,value,time_start,time_end):
+        '''
+        添加标签
+        '''
         self.out+="{},{},{}\n".format(time_start,time_end,value)
 
 class video:
@@ -61,27 +63,27 @@ class video:
                 fps = 1/(curr_time-prev_time)
                 prev_time = curr_time
                 key = cv2.waitKey(1)
-                if key==27:
+                if key==27:# esc 退出
                     break
-                elif key==ord('w'):
+                elif key==ord('w'):# w 2倍速
                     start_time+=curr_time*(1-speed/2)
                     prev_time=time.time()-start_time
                     speed=2
                     print('\n2x speed')
                     curr_time=time.time()-start_time
-                elif key==ord('s'):
+                elif key==ord('s'):# s 1倍速
                     start_time+=curr_time*(1-speed)
                     prev_time=time.time()-start_time
                     speed=1
                     print('\n1x speed')
                     curr_time=time.time()-start_time
-                elif key==ord('x'):
+                elif key==ord('x'):# x 0.5倍速
                     start_time+=curr_time*(1-speed*2)
                     prev_time=time.time()-start_time
                     speed=0.5
                     print('\n0.5x speed')
                     curr_time=time.time()-start_time
-                elif key==32:
+                elif key==32:# 空格暂停
                     cv2.waitKey(0)
                     start_time+=time.time()-start_time-curr_time
                 print('\r'+str(int(curr_time*speed*100)/100)+'\t'+str(int(fps*10)/10)+'\t',end='')
