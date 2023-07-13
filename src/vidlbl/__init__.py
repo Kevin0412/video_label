@@ -3,20 +3,19 @@ import numpy as np
 import time
 
 class label:
-    def __init__(self,Range=(0,1),serial=True):
+    def __init__(self,Range=[0,1]):
         '''
-        Range:范围，默认(0,1)
+        Range:范围，默认[0,1]
         serial:是否连续，默认True
         '''
-        self.Range=(0,1)
-        self.serial=True
-        self.out="time_start,time_end,value,min,max,serial\n"
+        self.Range=[0,1]
+        self.out="values\n"
+        for n,r in zip(range(len(Range)),Range):
+            self.out+="{},{}\n".format(n,r)
+        self.out+="labels\ntime_start,time_end,value\n"
 
     def label(self,value,time_start,time_end):
-        if self.serial==True:
-            self.out+="{},{},{},{},{},1\n".format(time_start,time_end,value,self.Range[0],self.Range[1])
-        else:
-            self.out+="{},{},{},{},{},0\n".format(time_start,time_end,value,self.Range[0],self.Range[1])
+        self.out+="{},{},{}\n".format(time_start,time_end,value)
 
 class video:
     def __init__(self,path):
@@ -27,6 +26,7 @@ class video:
         n=0
         FPS=cap.get(5)
         start_time=time.time()
+        start_time-=60
         prev_time=time.time()-start_time
         while cap.isOpened():
             if n!=0:
