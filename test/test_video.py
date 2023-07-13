@@ -9,4 +9,6 @@ nggyu=vidlbl.video("test/never_gonna_give_you_up.mp4")
 
 nggyu.show()
 
-nggyu.show(2) #2倍速
+nggyu.show(speed=2) #2倍速
+
+nggyu.show(start=60) #前60秒快进
